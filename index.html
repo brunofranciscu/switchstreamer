@@ -1,0 +1,129 @@
+<html>
+
+<head>
+    <title>Nintendo Switch Streamer</title>
+</head>
+
+<body id="body" class="">
+    <style>
+        #vid {
+            -webkit-app-region: drag;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: black;
+            overflow: hidden;
+        }
+
+        * {
+            outline: none;
+            border: none;
+        }
+
+        .video {
+            position: absolute;
+            margin-inline: auto;
+            top: 0;
+            left: 50%;
+            translate: -50% 0;
+            z-index: 3;
+        }
+
+        .video video {
+            aspect-ratio: 16/9;
+            width: 100vw;
+            height: 100vh;
+            z-index: 4;
+            position: relative;
+        }
+
+
+        ::-webkit-media-controls {
+            display: none !important;
+        }
+
+        img {
+            position: fixed;
+            inset: 50% 50%;
+            translate: -50% -50%;
+            cursor: pointer;
+            transition: .2s;
+            z-index: 99999999;
+            -webkit-app-region: no-drag;
+        }
+
+        img:hover {
+            scale: 1.05;
+        }
+
+        #vid2 {
+            position: absolute;
+            inset: 0 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            filter: blur(30px) saturate(2);
+            z-index: 0;
+            scale: 2;
+        }
+    </style>
+    <div class="video" onclick="openFullscreen()">
+        <video autoplay id="vid" controls="false"></video>
+        <video autoplay id="vid2" controls="false"></video>
+    </div>
+    <div class="play">
+        <img src="switch.ico" alt="" onclick="openFullscreen()">
+    </div>
+    <script>
+
+        document.addEventListener("DOMContentLoaded", () => {
+            var media = document.getElementById("vid");
+            var bg = document.getElementById("vid2");
+            var mediaDevices = navigator.mediaDevices;
+            var play = document.querySelector('img')
+
+            mediaDevices
+                .getUserMedia({
+
+                    video: { width: 1920, height: 1080, facingMode: "user" },
+                    audio: false
+                })
+                .then((stream) => {
+                    bg.srcObject = stream;
+                    bg.addEventListener("loadedmetadata", () => {
+                        bg.play();
+                    });
+                }).catch(alert);
+
+            play.addEventListener('click', () => {
+                setTimeout(() => {
+                    play.style.opacity = '0';
+                    play.style.pointerEvents = 'none';
+                }, 500)
+
+                mediaDevices
+                    .getUserMedia({
+
+                        video: { width: 1920, height: 1080, facingMode: "user" },
+                        audio: false
+                    })
+                    .then((stream) => {
+                        media.srcObject = stream;
+                        media.addEventListener("loadedmetadata", () => {
+                            media.play();
+                        });
+                    }).catch(alert);
+            });
+        })
+
+        function openFullscreen() {
+            if (document.body.requestFullscreen) {
+                document.body.requestFullscreen();
+            }
+        }
+    </script>
+</body>
+
+</html>

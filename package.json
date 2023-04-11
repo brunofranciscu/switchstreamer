@@ -1,0 +1,21 @@
+{
+  "name": "switch",
+  "version": "1.0.0",
+  "main": "main.js",
+  "description": "",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "BRUNO FRANCISCO",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "24.0.0"
+  },
+  "dependencies": {
+    "custom-electron-titlebar": "^4.2.0-beta.0",
+    "electron-app": "^1.0.0",
+    "electron-drag": "^2.0.0",
+    "win-mouse": "^2.0.1"
+  }
+}
